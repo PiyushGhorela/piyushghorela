@@ -1,0 +1,25 @@
+// SPDX-License-Identifier: MIT
+pragma solidity ^0.8.0;
+
+contract Loan {
+    uint public maxDebtIncomeRatio = 40;  // Maximum debt-to-income ratio (as a percentage)
+
+    // Function to check loan eligibility based on income and current debt
+    function checkEligibility(uint income, uint currentDebt) public view {
+        uint debtIncomeRatio = (currentDebt * 100) / income;
+        require(debtIncomeRatio <= maxDebtIncomeRatio, "Debt-to-income ratio exceeds eligibility criteria");
+    }
+
+    // Function to calculate the maximum loan amount based on collateral value
+    function calculateLoanAmount(uint collateralValue) public pure returns (uint) {
+        uint loanAmount = collateralValue * 60 / 100;  // Typically, a bank might lend up to 60% of the collateral value
+        assert(loanAmount > 0);  // Ensure the loan amount is greater than zero
+        return loanAmount;
+    }
+
+    // Function for loan disbursement with a mock implementation
+    function disburseLoan() public pure {
+        // Revert the transaction with a message, simulating a disbursement failure
+        revert("Loan disbursement failed");
+    }
+}
